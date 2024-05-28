@@ -226,7 +226,7 @@ Aidez Galahad, le plus jeune chevalier de la Table ronde, à mener sa quête au 
 </h3>
 <p>L&rsquo;objectif de ce challenge est &ldquo;simple&rdquo;<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> : placer notre personnage en haut de la plus haute tour pour récupérer le premier flag.</p>
 <p>La première chose que l&rsquo;on observe en lançant le jeu est la vie du personnage en haut à gauche de l&rsquo;écran : <strong>Health: 255</strong>.</p>
-<p><img alt="Vie du personnage" src="../../assets/images/2024-05-27_22-22-health.png"></p>
+<p><img alt="Vie du personnage" src="./2024-05-27_22-22-health.png"></p>
 <p>Au niveau des contrôles on note :</p>
 <ul>
 <li>avancer/reculer (touches Z/S),</li>
@@ -244,9 +244,9 @@ Aidez Galahad, le plus jeune chevalier de la Table ronde, à mener sa quête au 
 </h4>
 <p>Pour cette étape nous allons utiliser <a href="https://github.com/cheat-engine/cheat-engine"  class="external-link" target="_blank" rel="noopener">Cheat Engine</a> et <a href="https://github.com/dnSpy/dnSpy"  class="external-link" target="_blank" rel="noopener">dnSpy</a>.</p>
 <p>En ouvrant le fichier <code>Galahad_Quest\Galahad Quest_Data\Managed\Assembly-CSharp.dll</code> dans dnSpy, nous identifions le type <code>byte</code> pour la variable <code>health</code> et elle est initialisée à <code>byte.MaxValue</code>, i.e 255.</p>
-<p><img alt="Structure du personnage" src="../../assets/images/2024-05-27_23-11-player-structure.png"></p>
+<p><img alt="Structure du personnage" src="./2024-05-27_23-11-player-structure.png"></p>
 <p>Dans Cheat Engine nous allons donc rechercher la valeur <code>255</code> (ou <code>FF</code> en hexadécimal) de type <code>Byte</code> dans le processus <code>Galahad Quest</code>.</p>
-<p><img alt="Recherche de l&rsquo;adresse de health" src="../../assets/images/2024-05-27_23-17-recherche-health.png"></p>
+<p><img alt="Recherche de l&rsquo;adresse de health" src="./2024-05-27_23-17-recherche-health.png"></p>
 <p>La première itération remonte un grand nombre de valeurs (~127 millions) et évidemment nous n&rsquo;allons pas passer sur chaque valeur à la main pour trouver la bonne adresse.
 Cheat Engine dispose d&rsquo;un panel de type de scans pour affiner notre résultat. Dans notre cas nous allons utilisé de façon aléatoire mais logique les scans suivants :</p>
 <ul>
@@ -255,11 +255,11 @@ Cheat Engine dispose d&rsquo;un panel de type de scans pour affiner notre résul
 </ul>
 <p><em>Notabene: le scan &lsquo;unchanged&rsquo; est utilisé lorsque la valeur de la vie n&rsquo;a pas changé, et inversement pour les autres scans.</em></p>
 <!-- raw HTML omitted -->
-<p>La vie change sur l&rsquo;épée (ne pas aller trop loin pour les premiers scans). <img alt="Recherche d&rsquo;une valeur inférieure à la recherche précédente" src="../../assets/images/2024-05-27_23-38-decreased-value.png"></p>
+<p>La vie change sur l&rsquo;épée (ne pas aller trop loin pour les premiers scans). <img alt="Recherche d&rsquo;une valeur inférieure à la recherche précédente" src="./2024-05-27_23-38-decreased-value.png"></p>
 <!-- raw HTML omitted -->
-<p><img alt="Adresse de la variable health" src="../../assets/images/2024-05-27_23-31-scan-type.png"></p>
+<p><img alt="Adresse de la variable health" src="./2024-05-27_23-31-scan-type.png"></p>
 <p>Après plusieurs itérations nous obtenons l&rsquo;adresse de la variable <code>health</code>, qui appartient à la structure <code>PlayerController</code> (cf. dnSpy).</p>
-<p><img alt="Adresse de la variable health trouvée" src="../../assets/images/2024-05-27_23-41-health-found.png"></p>
+<p><img alt="Adresse de la variable health trouvée" src="./2024-05-27_23-41-health-found.png"></p>
 <p><em>Notabene: Nous obtenons une adresse dynamique, c&rsquo;est-à-dire qui sera différente à chaque lancement du jeu (et donc cela implique de refaire le processus de recherche à chaque relancement). Pour les plus curieux, Cheat Engine représente les adresses statiques avec une couleur verte. Libre à vous de remonter la chaîne des pointeurs pour trouver une adresse statique (spoiler: je ne l&rsquo;ai pas fait).</em></p>
 <p>Cependant, nous n&rsquo;avons pas encore de moyen d&rsquo;aller en haut de la plus haute tour à ce stade.
 Pour cela, nous allons rechercher l&rsquo;offset de la variable health au sein de la structure via le debugger de Cheat Engine : clic droit sur l&rsquo;adresse et <code>Find what write to this address (F6)</code>.</p>
