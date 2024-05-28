@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>
+  Breizh ctf 2024 - Write-up - Game Hacking · sillawned
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="sillawned">
+<meta name="description" content="Introduction Link to heading Cette année, les organisateurs du Breizh CTF nous ont proposé des challenges dans la catégorie Game Hacking. Un jeu a été spécialement conçu pour l&rsquo;évènement : &ldquo;Galahad Quest&rdquo;. Le moteur graphique Unity a été utilisé pour l&rsquo;occasion.
+Challenges Link to heading L&rsquo;auteur HellDiner a caché dans la mémoire du jeu 4 flag :
+Only Up!
+Aidez Galahad, le plus jeune chevalier de la Table ronde, à mener sa quête au travers de différentes missions.">
+<meta name="keywords" content="">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Breizh ctf 2024 - Write-up - Game Hacking">
+  <meta name="twitter:description" content="Introduction Link to heading Cette année, les organisateurs du Breizh CTF nous ont proposé des challenges dans la catégorie Game Hacking. Un jeu a été spécialement conçu pour l’évènement : “Galahad Quest”. Le moteur graphique Unity a été utilisé pour l’occasion.
+Challenges Link to heading L’auteur HellDiner a caché dans la mémoire du jeu 4 flag :
+Only Up!
+Aidez Galahad, le plus jeune chevalier de la Table ronde, à mener sa quête au travers de différentes missions.">
+
+<meta property="og:url" content="http://localhost:1313/posts/bzhctf2024-wu-gamehacking/">
+  <meta property="og:site_name" content="sillawned">
+  <meta property="og:title" content="Breizh ctf 2024 - Write-up - Game Hacking">
+  <meta property="og:description" content="Introduction Link to heading Cette année, les organisateurs du Breizh CTF nous ont proposé des challenges dans la catégorie Game Hacking. Un jeu a été spécialement conçu pour l’évènement : “Galahad Quest”. Le moteur graphique Unity a été utilisé pour l’occasion.
+Challenges Link to heading L’auteur HellDiner a caché dans la mémoire du jeu 4 flag :
+Only Up!
+Aidez Galahad, le plus jeune chevalier de la Table ronde, à mener sa quête au travers de différentes missions.">
+  <meta property="og:locale" content="fr">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-05-28T17:56:11+02:00">
+    <meta property="article:modified_time" content="2024-05-28T17:56:11+02:00">
+    <meta property="article:tag" content="CTF">
+    <meta property="article:tag" content="Game Hacking">
+
+
+
+
+<link rel="canonical" href="http://localhost:1313/posts/bzhctf2024-wu-gamehacking/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.css" media="screen">
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.css" media="screen">
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="http://localhost:1313/">
+      sillawned
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/about/">A propos</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://localhost:1313/posts/bzhctf2024-wu-gamehacking/">
+              Breizh ctf 2024 - Write-up - Game Hacking
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2024-05-28T17:56:11&#43;02:00">
+                28-05-2024
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              5 minutes de lecture
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/ctf/">CTF</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/game-hacking/">Game Hacking</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="introduction">
+  Introduction
+  <a class="heading-link" href="#introduction">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Cette année, les organisateurs du Breizh CTF nous ont proposé des challenges dans la catégorie Game Hacking. Un jeu a été spécialement conçu pour l&rsquo;évènement : &ldquo;Galahad Quest&rdquo;. Le moteur graphique Unity a été utilisé pour l&rsquo;occasion.</p>
+<h2 id="challenges">
+  Challenges
+  <a class="heading-link" href="#challenges">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>L&rsquo;auteur <a href="https://github.com/h311d1n3r"  class="external-link" target="_blank" rel="noopener">HellDiner</a> a caché dans la mémoire du jeu 4 flag :</p>
+<ol>
+<li>Only Up!<br>
+<em>Aidez Galahad, le plus jeune chevalier de la Table ronde, à mener sa quête au travers de différentes missions. Pour le premier de ses 4 travaux, le fils de Lancelot du Lac doit se hisser sur la tour la plus haute du village. Seulement, malgré une capacité de saut défiant les lois de la physique, la tour semble bien inaccessible. À moins que&hellip;</em></li>
+<li>Age of Fire<br>
+<em>Pour cette seconde tâche, Galahad a pour mission d&rsquo;allumer une torche placée devant l&rsquo;entrée du village menant au dangereux &ldquo;Pont de l&rsquo;épée&rdquo;. Pour mener à bien sa mission, Merlin lui a confié un puissant sort permettant de tirer des boules de feu. Mais notre héros a oublié comment le déclencher&hellip; Aidez-le à retrouver la mémoire et à lancer son sort sur la torche pour l&rsquo;enflammer.</em></li>
+<li>The Sword Bridge<br>
+<em>Vous voici rendu à la troisième mission de notre chevalier. Afin de mener à bien cette dernière, Galahad doit rejoindre la plateforme située au bout du légendaire &ldquo;Pont de l&rsquo;épée&rdquo;. Mais n&rsquo;imaginez pas qu&rsquo;un sort de téléportation puisse suffire, il est nécessaire que Galahad marche sur le pont. Sinon, le secret ne vous sera pas dévoilé&hellip;</em></li>
+<li>A well-kept secret<br>
+<em>Vous voici arrivé à l&rsquo;ultime tâche de Galahad, et cette dernière est tout sauf aisée : retrouver la puissante Excalibur, l&rsquo;épée du Roi Arthur. Ce dernier l&rsquo;a perdue quelque part sur la carte. Malheureusement, loin de son maître, l&rsquo;arme est devenue invisible. Vous devez donc rentrer en contact avec un objet invisible, perdu à un endroit quelconque&hellip;</em></li>
+</ol>
+<h2 id="résolution">
+  Résolution
+  <a class="heading-link" href="#r%c3%a9solution">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p><em>Disclaimer : le write-up a pour but d&rsquo;aborder une méthodologie générale sur le game hacking, et non la technique la plus optimisée pour résoudre ces challenges.</em></p>
+<h3 id="only-up">
+  Only Up!
+  <a class="heading-link" href="#only-up">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>L&rsquo;objectif de ce challenge est &ldquo;simple&rdquo;<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> : placer notre personnage en haut de la plus haute tour pour récupérer le premier flag.</p>
+<p>La première chose que l&rsquo;on observe en lançant le jeu est la vie du personnage en haut à gauche de l&rsquo;écran : <strong>Health: 255</strong>.</p>
+<p><img alt="Vie du personnage" src="../../assets/images/2024-05-27_22-22-health.png"></p>
+<p>Au niveau des contrôles on note :</p>
+<ul>
+<li>avancer/reculer (touches Z/S),</li>
+<li>tourner la caméra droite/gauche (touches Q/D),</li>
+<li>sauter (touche espace),</li>
+<li>caméra à 180° (clic droit de la souris).</li>
+</ul>
+<p>En explorant la zone on se rend compte que les contrôles à notre disposition ne suffisent pas pour nous rendre en haut de la plus haute tour. Il va falloir mettre les mains dans la mémoire du jeu pour arriver à nos fins.</p>
+<h4 id="recherche-de-ladresse-mémoire-de-la-vie">
+  Recherche de l&rsquo;adresse mémoire de la vie
+  <a class="heading-link" href="#recherche-de-ladresse-m%c3%a9moire-de-la-vie">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p>Pour cette étape nous allons utiliser <a href="https://github.com/cheat-engine/cheat-engine"  class="external-link" target="_blank" rel="noopener">Cheat Engine</a> et <a href="https://github.com/dnSpy/dnSpy"  class="external-link" target="_blank" rel="noopener">dnSpy</a>.</p>
+<p>En ouvrant le fichier <code>Galahad_Quest\Galahad Quest_Data\Managed\Assembly-CSharp.dll</code> dans dnSpy, nous identifions le type <code>byte</code> pour la variable <code>health</code> et elle est initialisée à <code>byte.MaxValue</code>, i.e 255.</p>
+<p><img alt="Structure du personnage" src="../../assets/images/2024-05-27_23-11-player-structure.png"></p>
+<p>Dans Cheat Engine nous allons donc rechercher la valeur <code>255</code> (ou <code>FF</code> en hexadécimal) de type <code>Byte</code> dans le processus <code>Galahad Quest</code>.</p>
+<p><img alt="Recherche de l&rsquo;adresse de health" src="../../assets/images/2024-05-27_23-17-recherche-health.png"></p>
+<p>La première itération remonte un grand nombre de valeurs (~127 millions) et évidemment nous n&rsquo;allons pas passer sur chaque valeur à la main pour trouver la bonne adresse.
+Cheat Engine dispose d&rsquo;un panel de type de scans pour affiner notre résultat. Dans notre cas nous allons utilisé de façon aléatoire mais logique les scans suivants :</p>
+<ul>
+<li>Unchanged value,</li>
+<li>Changed value (ou Decreased/Increased pour un affinage plus rapide).</li>
+</ul>
+<p><em>Notabene: le scan &lsquo;unchanged&rsquo; est utilisé lorsque la valeur de la vie n&rsquo;a pas changé, et inversement pour les autres scans.</em></p>
+<!-- raw HTML omitted -->
+<p>La vie change sur l&rsquo;épée (ne pas aller trop loin pour les premiers scans). <img alt="Recherche d&rsquo;une valeur inférieure à la recherche précédente" src="../../assets/images/2024-05-27_23-38-decreased-value.png"></p>
+<!-- raw HTML omitted -->
+<p><img alt="Adresse de la variable health" src="../../assets/images/2024-05-27_23-31-scan-type.png"></p>
+<p>Après plusieurs itérations nous obtenons l&rsquo;adresse de la variable <code>health</code>, qui appartient à la structure <code>PlayerController</code> (cf. dnSpy).</p>
+<p><img alt="Adresse de la variable health trouvée" src="../../assets/images/2024-05-27_23-41-health-found.png"></p>
+<p><em>Notabene: Nous obtenons une adresse dynamique, c&rsquo;est-à-dire qui sera différente à chaque lancement du jeu (et donc cela implique de refaire le processus de recherche à chaque relancement). Pour les plus curieux, Cheat Engine représente les adresses statiques avec une couleur verte. Libre à vous de remonter la chaîne des pointeurs pour trouver une adresse statique (spoiler: je ne l&rsquo;ai pas fait).</em></p>
+<p>Cependant, nous n&rsquo;avons pas encore de moyen d&rsquo;aller en haut de la plus haute tour à ce stade.
+Pour cela, nous allons rechercher l&rsquo;offset de la variable health au sein de la structure via le debugger de Cheat Engine : clic droit sur l&rsquo;adresse et <code>Find what write to this address (F6)</code>.</p>
+<p>#TODO</p>
+<ol>
+<li>Screenshot de la fonction et montrer l&rsquo;offset (0xF9)</li>
+<li>Observer la mémoire aux alentours et trouver l&rsquo;offset de &lsquo;on_ground&rsquo;</li>
+<li>Freeze la valeur de &lsquo;on_ground&rsquo; pour sauter à l&rsquo;infini</li>
+<li>Se rendre sur la plus haute tour</li>
+</ol>
+<h3 id="age-of-fire">
+  Age of Fire
+  <a class="heading-link" href="#age-of-fire">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p>L&rsquo;objectif est d&rsquo;allumer la torche située à côté de l&rsquo;entrée du village avec le sort <code>boule de feu</code>.</p>
+<p>Maintenant que notre setup de hack est mis en place, ce challenge et le suivant seront plus rapide. En retournant sur dnSpy on constate que la condition pour débloquer le sort sur le clic droit dépend de la variable <code>some_bool</code> de type <code>Byte</code>, et que celle-ci est &ldquo;proche dans la mémoire&rdquo; par rapport à la variable <code>health</code>.</p>
+<p>#TODO</p>
+<h3 id="the-sword-bridge">
+  The Sword Bridge
+  <a class="heading-link" href="#the-sword-bridge">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="a-well-kept-secret">
+  A well-kept secret
+  <a class="heading-link" href="#a-well-kept-secret">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h2 id="ressources-annexes">
+  Ressources annexes
+  <a class="heading-link" href="#ressources-annexes">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Easy challenge.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2024
+     sillawned 
+    ·
+    
+    Propulsé par <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="/js/coder.js"></script>
+  
+
+  
+
+  
+
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

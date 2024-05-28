@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Game Hacking on sillawned</title>
+    <link>http://localhost:1313/tags/game-hacking/</link>
+    <description>Recent content in Game Hacking on sillawned</description>
+    <generator>Hugo</generator>
+    <language>fr</language>
+    <lastBuildDate>Tue, 28 May 2024 17:56:11 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/game-hacking/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Breizh ctf 2024 - Write-up - Game Hacking</title>
+      <link>http://localhost:1313/posts/bzhctf2024-wu-gamehacking/</link>
+      <pubDate>Tue, 28 May 2024 17:56:11 +0200</pubDate>
+      <guid>http://localhost:1313/posts/bzhctf2024-wu-gamehacking/</guid>
+      <description>Introduction Link to heading Cette année, les organisateurs du Breizh CTF nous ont proposé des challenges dans la catégorie Game Hacking. Un jeu a été spécialement conçu pour l&amp;rsquo;évènement : &amp;ldquo;Galahad Quest&amp;rdquo;. Le moteur graphique Unity a été utilisé pour l&amp;rsquo;occasion.&#xA;Challenges Link to heading L&amp;rsquo;auteur HellDiner a caché dans la mémoire du jeu 4 flag :&#xA;Only Up!&#xA;Aidez Galahad, le plus jeune chevalier de la Table ronde, à mener sa quête au travers de différentes missions.</description>
+    </item>
+  </channel>
+</rss>
